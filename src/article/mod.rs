@@ -3,18 +3,13 @@ pub mod item;
 pub mod outline;
 pub mod title;
 
-use chrono::Local;
 use yew::prelude::*;
 use yew::virtual_dom::VNode;
 
 use crate::introduction::_Introduction;
 use crate::utils::markdown_files::ArticleFactory;
 
-use self::content::_Content;
 use self::item::Article;
-use self::item::_Article;
-use self::outline::_Outline;
-use self::title::_Title;
 use crate::introduction::Introduction;
 
 #[function_component(Articles)]
