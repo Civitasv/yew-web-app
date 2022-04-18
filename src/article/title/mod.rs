@@ -1,35 +1,25 @@
-use yew::{html, Component, Context, Html};
-pub struct Title {
-    title: &'static str,
+use yew::prelude::*;
+
+#[derive(Clone, PartialEq)]
+pub struct _Title {
+    pub title: String,
 }
 
-pub enum Msg {
-    Click,
+impl _Title {
+    pub fn new(title: String) -> Self {
+        Self { title }
+    }
+}
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub title: _Title,
 }
 
-impl Component for Title {
-    type Message = Msg;
-    type Properties = ();
-    fn create(ctx: &Context<Self>) -> Self {
-        Self { title: "Title" }
-    }
-
-    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Msg::Click => {
-                self.title = "Changed Title";
-                true
-            }
-        }
-    }
-
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let onclick = ctx.link().callback(|_| Msg::Click);
-        html! {
-            <div>
-            <button {onclick}>{"CHANGE IT"}</button>
-            {self.title}
-            </div>
-        }
+#[function_component(Title)]
+pub fn outline(Props { title }: &Props) -> Html {
+    html! {
+        <div class="text-lg font-bold">
+        {&title.title}
+        </div>
     }
 }

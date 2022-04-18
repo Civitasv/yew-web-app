@@ -1,27 +1,25 @@
-use yew::{html, Component, Properties};
+use yew::prelude::*;
 
-use web_sys::{Event, HtmlInputElement};
-struct Content {
-    contents: &'static str,
+#[derive(Clone, PartialEq)]
+pub struct _Content {
+    content: String,
 }
 
-enum Msg {}
-
-#[derive(Properties, PartialEq)]
-pub struct Props {}
-
-impl Component for Content {
-    type Message = Msg;
-    type Properties = Props;
-    fn create(ctx: &yew::Context<Self>) -> Self {
-        Self {
-            contents: "Initial Contents",
-        }
+impl _Content {
+    pub fn new(content: String) -> Self {
+        Self { content }
     }
+}
+#[derive(Properties, PartialEq)]
+pub struct Props {
+    pub content: _Content,
+}
 
-    fn view(&self, ctx: &yew::Context<Self>) -> yew::Html {
-        html! {
-            <div>{self.contents}</div>
-        }
+#[function_component(Content)]
+pub fn outline(Props { content }: &Props) -> Html {
+    html! {
+        <div>
+        {&content.content}
+        </div>
     }
 }

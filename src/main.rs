@@ -1,5 +1,6 @@
-use web::article::title::Title;
+use web::App;
 
 fn main() {
-    yew::start_app::<Title>();
+    wasm_logger::init(wasm_logger::Config::new(log::Level::Trace));
+    yew::Renderer::<App>::new().render();
 }
