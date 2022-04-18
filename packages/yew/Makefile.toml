@@ -1,0 +1,53 @@
+[tasks.native-test]
+command = "cargo"
+toolchain = "1.56"
+args = ["test", "native_"]
+
+[tasks.test]
+dependencies = ["native-test"]
+extend = "core::wasm-pack-base"
+command = "wasm-pack"
+args = [
+    "test",
+    "@@split(YEW_TEST_FLAGS, )",
+    "--",
+    "--features",
+    "${YEW_TEST_FEATURES}",
+]
+
+[tasks.doc-test]
+clear = true
+run_task = { name = ["doc-test-normal"], fork = true }
+
+[tasks.doc-test-normal]
+command = "cargo"
+args = [
+    "test",
+    "--doc",
+    "--features",
+    "tokio,doc_test,wasm_test",
+]
+
+[tasks.ssr-test]
+command = "cargo"
+args = ["test", "ssr_tests", "--features", "ssr"]
+
+[tasks.clippy-feature-soundness]
+script = '''
+#!/usr/bin/env bash
+set -ex
+cargo clippy -- --deny=warnings
+cargo clippy --features=ssr -- --deny=warnings
+cargo clippy --features=csr -- --deny=warnings
+cargo clippy --features=hydration -- --deny=warnings
+cargo clippy --all-features --all-targets -- --deny=warnings
+
+cargo clippy --release -- --deny=warnings
+cargo clippy --release --features=ssr -- --deny=warnings
+cargo clippy --release --features=csr -- --deny=warnings
+cargo clippy --release --features=hydration -- --deny=warnings
+cargo clippy --release --all-features --all-targets -- --deny=warnings
+'''
+
+[tasks.lint-flow]
+dependencies = ["clippy-feature-soundness"]
