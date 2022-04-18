@@ -5,8 +5,13 @@ version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-[dependencies]
-yew = "0.19"
-
 [lib]
 name = "web"
+
+[dependencies]
+js-sys = "0.3"
+yew = "0.19"
+
+[dependencies.web-sys]
+features = ["File"]
+version = "0.3"

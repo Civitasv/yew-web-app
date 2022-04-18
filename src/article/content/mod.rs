@@ -1,5 +1,6 @@
 use yew::{html, Component, Properties};
 
+use web_sys::{Event, HtmlInputElement};
 struct Content {
     contents: &'static str,
 }

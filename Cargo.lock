@@ -437,5 +437,7 @@ dependencies = [
 name = "yew-map-project"
 version = "0.1.0"
 dependencies = [
+ "js-sys",
+ "web-sys",
  "yew",
 ]
