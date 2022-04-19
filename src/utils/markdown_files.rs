@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 use crate::article::{content::_Content, item::_Article, outline::_Outline, title::_Title};
 
-use super::markdown_yaml::YamlFormatter;
+use super::markdown_yaml::YamlFrontmatter;
 
 pub struct ArticleFactory;
 
@@ -25,7 +25,7 @@ impl ArticleFactory {
         for (index, path) in paths.enumerate() {
             let filecontent = fs::read_to_string(path.unwrap().path()).unwrap();
 
-            let result = YamlFormatter::parse::<Metadata>(&filecontent).unwrap();
+            let result = YamlFrontmatter::parse::<Metadata>(&filecontent).unwrap();
             let _article = _Article::new(
                 index,
                 _Title::new(result.metadata.title),
