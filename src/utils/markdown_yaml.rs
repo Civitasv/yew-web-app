@@ -8,11 +8,11 @@ pub struct Document<T: DeserializeOwned> {
     pub content: String,
 }
 
-pub struct YamlFormatter;
+pub struct YamlFrontmatter;
 
-impl YamlFormatter {
+impl YamlFrontmatter {
     pub fn parse<T: DeserializeOwned>(markdown: &str) -> Result<Document<T>, Box<dyn Error>> {
-        let yaml = YamlFormatter::extract(markdown)?;
+        let yaml = YamlFrontmatter::extract(markdown)?;
         let metadata = serde_yaml::from_str::<T>(yaml.0.as_str())?;
         Ok(Document {
             metadata,
@@ -58,7 +58,7 @@ mod test {
 
     use serde::Deserialize;
 
-    use crate::utils::markdown_yaml::YamlFormatter;
+    use crate::utils::markdown_yaml::YamlFrontmatter;
 
     #[derive(Deserialize, Debug)]
     struct Metadata {
@@ -71,7 +71,20 @@ mod test {
         let mdstr = fs::read_to_string("./mdfiles/test.md").unwrap();
         println!("{}", mdstr);
 
-        let result = YamlFormatter::parse::<Metadata>(&mdstr).unwrap();
+        let result = YamlFrontmatter::parse::<Metadata>(&mdstr).unwrap();
         println!("{:?}", result.metadata);
+    }
+
+    #[derive(Deserialize, Debug)]
+    struct meta {
+        posts: Vec<String>,
+    }
+    #[test]
+    fn test2() {
+        let yaml = fs::read_to_string("./posts.yml").unwrap();
+        println!("{}", &yaml);
+
+        let data = serde_yaml::from_str::<meta>(&yaml).unwrap();
+        println!("{:?}", data);
     }
 }

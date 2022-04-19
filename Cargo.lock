@@ -746,7 +746,9 @@ dependencies = [
  "log",
  "serde",
  "serde_yaml",
+ "wasm-bindgen",
  "wasm-logger",
+ "web-sys",
  "yew",
  "yew-router",
 ]

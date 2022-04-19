@@ -13,6 +13,19 @@ chrono = {version = "0.4", features = ["unstable-locales", "wasmbind"]}
 log = "0.4"
 serde = "1.0"
 serde_yaml = "0.8"
+wasm-bindgen = "0.2.80"
 wasm-logger = "0.2"
 yew = {path = "./packages/yew", features = ["csr"]}
 yew-router = {path = "./packages/yew-router"}
+
+[dependencies.web-sys]
+version = "0.3"
+# We need to enable the `DomRect` feature in order to use the
+# `get_bounding_client_rect` method.
+features = [
+  "console",
+  "FileReader",
+  "Blob",
+]
+
+[mdfiles]
